@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://godot-twicil-example.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-twicil/godot_twicil.gd" type="Script" id=2]
@@ -15,24 +15,30 @@ __meta__ = {
 }
 
 [node name="lbUsersList" type="Label" parent="."]
-margin_left = 740.0
-margin_right = 1025.0
-margin_bottom = 597.0
+margin_left = 995.538
+margin_top = 3.34035
+margin_right = 1280.54
+margin_bottom = 600.34
 text = "CHAT USERS:
 "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 535.106, 283.38 )
-
+position = Vector2( 177.905, 375.53 )
 texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
 
-
 [node name="lbInfo" type="Label" parent="."]
-margin_left = 386.0
-margin_top = 178.0
-margin_right = 700.0
-margin_bottom = 192.0
-
+margin_left = 198.85
+margin_top = 27.8997
+margin_right = 512.85
+margin_bottom = 41.8997
 text = "Use instructions in chat to control this cutie! ^_^"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Users" type="Node2D" parent="."]

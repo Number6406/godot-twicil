@@ -1,3 +1,5 @@
 addons/godot-git-control.funabab/
 *.import
 export_presets.cfg
+/export
+rdmsht/Auth.gd
