@@ -12,6 +12,11 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Auth",
 "language": "GDScript",
+"path": "res://rdmsht/Auth.gd"
+}, {
+"base": "Node",
+"class": "Auth_template",
+"language": "GDScript",
 "path": "res://rdmsht/Auth.template.gd"
 }, {
 "base": "Node",
@@ -111,6 +116,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Auth": "",
+"Auth_template": "",
 "BaseEmotesCache": "",
 "BttvEmotesCache": "",
 "ChatList": "",
@@ -135,7 +141,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Le meilleur bot de l'univers"
-run/main_scene="res://godot-twicil-example.tscn"
+run/main_scene="res://scenes/godot-twicil-example.tscn"
 icon="res://icon.png"
 main_scene="res://godot-twicil-example.tscn"
 name="Godot TwiCIL Demo"
@@ -144,6 +150,8 @@ name="Godot TwiCIL Demo"
 
 window/size/width=1280
 window/size/height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep_height"
 
 [editor_plugins]
 
