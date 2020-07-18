@@ -2,7 +2,7 @@ extends Node2D
 
 var auth = load("res://rdmsht/Auth.gd");
 
-const CHANNEL = "number6406"	# Your channel name LOWER CASE
+const CHANNEL = "deakcor"	# Your channel name LOWER CASE
 
 export(bool) var animate = true
 export(float) var animations_time = 1.0
@@ -137,7 +137,7 @@ func _on_message_recieved(user_name: String, text: String, emotes: Array) -> voi
 	var isPresent = false;
 	for user in $Users.get_children():
 		if user.get("username") == user_name:
-			user.get_node("Message").text = text
+			user.setMessage(text)
 			isPresent = true
 			break
 	if !isPresent :
