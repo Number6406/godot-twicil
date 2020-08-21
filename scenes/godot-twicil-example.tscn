@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/godot-twicil-example.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-twicil/godot_twicil.gd" type="Script" id=2]
 [ext_resource path="res://addons/godot-twicil/sprites/twicil-icon.png" type="Texture" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://assets/ground.png" type="Texture" id=5]
+[ext_resource path="res://scenes/Rewards.gd" type="Script" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 720, 20 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 130.382, 447.688 )
 
 [node name="ExampleGodotTwiCIL" type="Node2D"]
 script = ExtResource( 1 )
@@ -15,10 +23,11 @@ __meta__ = {
 }
 
 [node name="lbUsersList" type="Label" parent="."]
+visible = false
 margin_left = 995.538
-margin_top = 3.34035
+margin_top = 4.7007
 margin_right = 1280.54
-margin_bottom = 600.34
+margin_bottom = 601.7
 text = "CHAT USERS:
 "
 __meta__ = {
@@ -26,12 +35,14 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 177.905, 375.53 )
 texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="lbInfo" type="Label" parent="."]
+visible = false
 margin_left = 198.85
 margin_top = 27.8997
 margin_right = 512.85
@@ -42,3 +53,40 @@ __meta__ = {
 }
 
 [node name="Users" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Floor"]
+position = Vector2( 630, 700 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 700, 20 )
+__meta__ = {
+"_editor_description_": "4"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+visible = false
+position = Vector2( 630, 700 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor"]
+position = Vector2( -130.596, 326.49 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 1410.29, 326.49 )
+shape = SubResource( 2 )
+
+[node name="Rewards" type="Node2D" parent="."]
+script = ExtResource( 6 )
+userList = NodePath("../Users")
+
+[node name="Timer" type="Timer" parent="Rewards"]
+wait_time = 2.0
+autostart = true
+__meta__ = {
+"_editor_description_": "Timer des rewards en secondes"
+}
+[connection signal="timeout" from="Rewards/Timer" to="Rewards" method="_on_Timer_timeout"]

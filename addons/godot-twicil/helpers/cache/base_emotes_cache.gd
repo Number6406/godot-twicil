@@ -93,7 +93,10 @@ func _on_http_request_queue_request_complete(id: String, result: int, response_c
 
 	if result == HTTPRequest.RESULT_SUCCESS:
 		var pretty_headers := HttpHeaders.new(headers)
-		var content_type := pretty_headers.headers.get('Content-Type') as String
+		var content_type = pretty_headers.headers.get('Content-Type')
+		
+		if (not content_type is String):
+			content_type = "image/png"
 
 		downloaded_content.type = content_type
 

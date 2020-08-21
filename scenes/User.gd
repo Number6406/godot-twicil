@@ -1,22 +1,24 @@
-extends Node2D
+extends KinematicBody2D
 
-onready var rng=RandomNumberGenerator.new()
+class_name User
 
 var username := "";
-var pos := Vector2();
 var target:Vector2;
 
+const speed := 80;
+const g = 981
+var velocity:Vector2;
 
-const speed := 1;
+var xp:int = 0;
+var points:int = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rng.randomize()
-	$TimerMovement.start()
+	target.x = position.x
 
 func place(name, pos):
 	self.username = name
-	self.pos = pos
+	self.position = pos
 	$Username.text = self.username
 	position = pos
 	pass
@@ -25,18 +27,15 @@ func setMessage(message):
 	$Message.text = message
 	print("nouveau message:"+message)
 	$TimerMessage.start()
-
+	
+func updateXpBar():
+	$XpBar.value = xp;
 
 func _on_Timer_timeout():
 	$Message.text = ""
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	position = lerp(position,target,delta*speed)
-
-func _on_TimerMovement_timeout():
-	target.x = rng.randf_range(-1, 1)*100;
-	target.y = rng.randf_range(-1, 1)*100;
-	var rect=get_viewport_rect().size
-	target.x=clamp(position.x+target.x,0,rect.x)
-	target.y=clamp(position.y+target.y,0,rect.y)
+	velocity.x = clamp(target.x - position.x, -1, 1) * speed
+	velocity.y += g * delta
+	velocity = move_and_slide(velocity, Vector2.UP)

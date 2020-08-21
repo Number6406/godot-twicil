@@ -2,7 +2,7 @@ extends Node2D
 
 var auth = load("res://rdmsht/Auth.gd");
 
-const CHANNEL = "deakcor"	# Your channel name LOWER CASE
+const CHANNEL = "number6406"	# Your channel name LOWER CASE
 
 export(bool) var animate = true
 export(float) var animations_time = 1.0
@@ -33,6 +33,12 @@ func __interpolate_method(obj, method, start_value, end_value, time):
 		start_value, end_value, time,
 		Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	tween.start()
+	
+func _move_character(params):
+	var user = String(params[0])
+	var x = float(params[1])
+	
+	$Users.get_node(user).target.x = x
 
 func _command_move_to(params):
 	var x = float(params[1])
@@ -96,6 +102,8 @@ func init_interactive_commands():
 	twicil.commands.add("move", self, "_command_move_to", 2)
 	twicil.commands.add("rotate", self, "_command_rotate")
 	twicil.commands.add("scale", self, "_command_scale", 2, true)
+	
+	twicil.commands.add("moveme", self, "_move_character", 1)
 
 	twicil.commands.add("hi", self, "_command_reply", 0, true)
 	twicil.commands.add_aliases("hi", ["hello", "hi,", "hello,"])
@@ -117,6 +125,7 @@ func createUser(name):
 	pos.x = rng.randi_range(20, 1260)
 	pos.y = rng.randi_range(20, 700)
 	node.place(name, pos)
+	node.name = name
 	$Users.add_child(node)
 	
 # events
@@ -125,6 +134,7 @@ func _on_user_appeared(name):
 
 func _on_user_disappeared(name):
 	var users_list_text = users_list_label.text
+	$Users.get_node(name).queue_free()
 
 	users_list_text.erase(
 		users_list_text.find(str("\n ", name)),
@@ -146,6 +156,6 @@ func _on_message_recieved(user_name: String, text: String, emotes: Array) -> voi
 func _on_emote_recieved(user_name: String, emote: Reference) -> void:
 	if emote.texture:
 		sprite.texture = emote.texture
-		for user in $Users.get_children():
-			if user.get("username") == user_name:
-				user.get_node("Sprite").texture = emote.texture
+		var user = $Users.get_node(user_name)
+		if (user != null):
+			user.get_node("Sprite").texture = emote.texture
