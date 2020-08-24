@@ -20,7 +20,7 @@ func _ready():
 
 func _on_Timer_timeout():
 	for user in get_node(userList).get_children():
-		user.xp += 5
+		user.addXp(5)
 		user.points += 2
 		user.updateXpBar()
 	pass # Replace with function body.

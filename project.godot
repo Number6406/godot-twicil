@@ -152,6 +152,10 @@ icon="res://icon.png"
 main_scene="res://godot-twicil-example.tscn"
 name="Godot TwiCIL Demo"
 
+[autoload]
+
+LevelControler="*res://scenes/LevelControler.gd"
+
 [display]
 
 window/size/width=1280

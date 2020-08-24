@@ -62,8 +62,8 @@ func _command_rotate(degrees):
 		sprite.get_rotation_degrees(), float(degrees[1]), animations_time)
 
 func _command_scale(params):
-	var scale_x = float(params[1]) if params.size() > 1 else 1
-	var scale_y = float(params[2]) if params.size() > 2 else 1
+	var scale_x = float(params[1]) if params.size() > 1 else 1.0
+	var scale_y = float(params[2]) if params.size() > 2 else 1.0
 
 	if not animate:
 		sprite.set_scale(Vector2(scale_x, scale_y))
@@ -77,6 +77,14 @@ func _command_reply(params):
 	var sender = params[0]
 
 	twicil.send_message("Hello, " + str(sender))
+	
+func _change_color(params):
+	var user = String(params[0])
+	var r = float(params[1])/255
+	var v = float(params[2])/255
+	var b = float(params[3])/255
+	
+	$Users.get_node(user).update_banner_color(Color(r, v, b))
 	
 func _salute_user():
 	twicil.send_whisper("number6406", "salut bg Kappa")
@@ -99,11 +107,12 @@ func send_greating_help():
 	twicil.send_message(help_text)
 
 func init_interactive_commands():
-	twicil.commands.add("move", self, "_command_move_to", 2)
-	twicil.commands.add("rotate", self, "_command_rotate")
-	twicil.commands.add("scale", self, "_command_scale", 2, true)
+#	twicil.commands.add("move", self, "_command_move_to", 2)
+#	twicil.commands.add("rotate", self, "_command_rotate")
+#	twicil.commands.add("scale", self, "_command_scale", 2, true)
 	
 	twicil.commands.add("moveme", self, "_move_character", 1)
+	twicil.commands.add("color", self, "_change_color", 3)
 
 	twicil.commands.add("hi", self, "_command_reply", 0, true)
 	twicil.commands.add_aliases("hi", ["hello", "hi,", "hello,"])
@@ -134,7 +143,8 @@ func _on_user_appeared(name):
 
 func _on_user_disappeared(name):
 	var users_list_text = users_list_label.text
-	$Users.get_node(name).queue_free()
+	if $Users.get_node(name) != null:
+		$Users.get_node(name).queue_free()
 
 	users_list_text.erase(
 		users_list_text.find(str("\n ", name)),
@@ -158,4 +168,4 @@ func _on_emote_recieved(user_name: String, emote: Reference) -> void:
 		sprite.texture = emote.texture
 		var user = $Users.get_node(user_name)
 		if (user != null):
-			user.get_node("Sprite").texture = emote.texture
+			user.get_node("Banner/Icon").texture = emote.texture
